@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Удаление заказа{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card border-danger mb-3 shadow-sm">
+            <div class="card-header bg-danger text-white fs-5">Подтверждение удаления</div>
+            <div class="card-body">
+                <h5 class="card-title text-danger">Вы уверены, что хотите удалить заказ #{{ order.id }}?</h5>
+                <hr>
+                <p class="card-text">
+                    <strong>Товар:</strong> {{ order.product.name|default:"-" }}<br>
+                    <strong>Количество:</strong> {{ order.quantity }}<br>
+                    <strong>Статус:</strong> <span class="badge bg-secondary">{{ order.get_status_display }}</span><br>
+                    <strong>Дата создания:</strong> {{ order.created_at|date:"d.m.Y H:i" }}
+                </p>
+                
+                <form method="post" class="mt-4 d-flex justify-content-between">
+                    {% csrf_token %}
+                    <a href="{% url 'orders:order_list' %}" class="btn btn-secondary">Отмена</a>
+                    <button type="submit" class="btn btn-danger">Подтвердить удаление</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
